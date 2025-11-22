@@ -1,0 +1,53 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "./FormattedDate.astro";
+
+interface Props {
+    id: string;
+    title: string;
+    description: string;
+    pubDate: Date;
+}
+
+const { pubDate, title, id, description } = Astro.props;
+---
+
+<li class="flex">
+    <a
+        href={`/blog/${id}`}
+        class="group
+         p-2
+         m-1
+         text-white
+        
+         w-full
+         border
+         border-transparent
+         hover:border-white
+        
+         active:text-highlight!
+         hover:text-highlight!
+         
+         hover:shadow-lg
+         hover:shadow-black
+        
+         no-underline!"
+    >
+        <p
+            class="text-gray-200 text-sm group-active:text-highlight!
+         group-hover:text-highlight!"
+        >
+            <FormattedDate date={pubDate} />
+        </p>
+        <h1 class="text-1xl">
+            {title}
+        </h1>
+        <p
+            class="pl- text-sm
+             text-gray-400
+             truncate overflow-hidden text-ellipsis whitespace-nowrap"
+        >
+            {description}
+        </p>
+    </a>
+</li>

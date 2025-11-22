@@ -1,0 +1,139 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+	--color-background: #111111;
+	/* --color-highlight: oklch(0.821 0.1415 216.27); */
+	/* --color-highlight: #0ff; */
+	/* --color-highlight: #fff; */
+	--color-highlight: #f00;
+	--color-surface: var(--color-neutral-900);
+
+	/* --color-surface-border: color-mix(
+		in oklab,
+		var(--color-white) 50%,
+		transparent
+	); */
+	--color-surface-border: var(--color-neutral-700);
+
+	/* --color-border: #e0e0e0; */
+	/* --color-muted: #bbb; */
+
+	/* --color-primary: #c02a06; */
+	/* --color-secondary: #0f0; */
+	/* --color-accent: #00f; */
+}
+
+/* Remove "" from blockquote */
+@utility prose {
+	blockquote p:first-of-type::before {
+		content: none;
+	}
+
+	blockquote p:last-of-type::after {
+		content: none;
+	}
+
+	code::before, code::after {
+		content: none;
+	}
+
+	code:not(pre code) {
+		/* display: inline-block; */
+		/* line-height: 1; */
+		padding: 0.2em 0.4em;
+		font-weight: 500;
+	}
+
+	.footnotes ol > li > p {
+		@apply mt-0 mb-0;
+	}
+
+	/* .footnotes li:target {
+		@apply bg-red-500;
+	} */
+	.footnotes li:target {
+		@apply ring-highlight ring-1;
+	}
+
+	.footnotes {
+		@apply text-sm;
+	}
+
+	/* Language label */
+	/* pre::before {
+		content: attr(data-language);
+		position: absolute;
+		top: 0.5rem;
+		right: 0.75rem;
+	} */
+}
+
+@custom-variant prose-inline-code {
+	&.prose :where(:not(pre) > code):not(:where([class~="not-prose"] *)) {
+		@slot;
+	}
+}
+
+.expressive-code pre {
+	border-radius: 0 !important;
+}
+
+.expressive-code .frame {
+	margin-bottom: 3em !important;
+}
+
+body {
+	/* font-family: "Atkinson", sans-serif; */
+	font-family: Noto Sans Mono Variable, monospace;
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	font-size: 20px;
+	line-height: 1.7;
+}
+main {
+	width: 768px;
+	max-width: calc(100% - 1em);
+	margin: auto;
+	padding: 3em 1em;
+}
+
+@media (max-width: 48em) {
+	/* body {
+		font-size: 18px;
+	} */
+	main {
+		max-width: calc(100%);
+		padding-top: 1em;
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+a {
+	text-decoration: underline;
+}
+
+a:hover {
+	color: var(--color-highlight);
+}
+
+a[href^="http"]:not(:has(img, svg))::after {
+	content: "";
+	display: inline-block;
+	width: 0.8em;
+	height: 0.8em;
+	/* margin-left: 0.25em; */
+
+	background-size: 100%;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24px' height='24px'%3E%3Cpath fill='white' d='M 5 3 C 3.9069372 3 3 3.9069372 3 5 L 3 19 C 3 20.093063 3.9069372 21 5 21 L 19 21 C 20.093063 21 21 20.093063 21 19 L 21 12 L 19 12 L 19 19 L 5 19 L 5 5 L 12 5 L 12 3 L 5 3 z M 14 3 L 14 5 L 17.585938 5 L 8.2929688 14.292969 L 9.7070312 15.707031 L 19 6.4140625 L 19 10 L 21 10 L 21 3 L 14 3 z'/%3E%3C/svg%3E");
+}
+
+/* .prose ol > li::marker {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: white;
+} */

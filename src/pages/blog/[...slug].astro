@@ -1,0 +1,71 @@
+---
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import MainLayout from "@layouts/MainLayout.astro";
+import FormattedDate from "@components/FormattedDate.astro";
+import { Image } from "astro:assets";
+import Header from "@components/Header.astro";
+import BasicCard from "@components/BasicCard.astro";
+import Prose from "@components/Prose.astro";
+
+export async function getStaticPaths() {
+	const posts = await getCollection("blog");
+	return posts.map((post) => ({
+		params: { slug: post.id },
+		props: post,
+	}));
+}
+type Props = CollectionEntry<"blog">;
+
+const post = Astro.props;
+const { Content } = await render(post);
+---
+
+<MainLayout title={post.data.title} description={post.data.description}>
+	<main>
+		<BasicCard>
+			<Prose>
+				<article>
+					<div class="hero-image">
+						{
+							post.data.heroImage && (
+								<Image
+									class="mt-0"
+									width={1020}
+									height={510}
+									src={post.data.heroImage}
+									alt=""
+									loading="eager"
+								/>
+							)
+						}
+					</div>
+					<div class="title">
+						<div class="date">
+							<FormattedDate date={post.data.pubDate} />
+							{
+								post.data.updatedDate && (
+									<div class="last-updated-on">
+										Last updated on{" "}
+										<FormattedDate
+											date={post.data.updatedDate}
+										/>
+									</div>
+								)
+							}
+						</div>
+						<h1 class="mb-0">
+							<a class="no-underline!" href={Astro.url.pathname}
+								>{post.data.title}</a
+							>
+						</h1>
+						<span class="text-gray-300"
+							>{post.data.description}</span
+						>
+						<hr />
+					</div>
+					<Content />
+				</article>
+			</Prose>
+		</BasicCard>
+	</main>
+</MainLayout>

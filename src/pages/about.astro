@@ -1,0 +1,17 @@
+---
+import MainLayout from "@layouts/MainLayout.astro";
+import BasicCard from "@components/BasicCard.astro";
+import Prose from "@components/Prose.astro";
+
+import AboutContent from "@content/about.mdx";
+---
+
+<MainLayout title="About" description="About qustrolabe's site.">
+	<main>
+		<BasicCard>
+			<Prose>
+				<AboutContent />
+			</Prose>
+		</BasicCard>
+	</main>
+</MainLayout>
