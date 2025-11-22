@@ -27,10 +27,8 @@ jobs:
 
       - name: Install, build, and upload your site
         uses: withastro/action@v2
-        # The action automatically detects 'bun.lockb' and uses Bun.
-        # If you want to force it, you can uncomment the following:
-        # with:
-        #   package-manager: bun
+        with:
+          package-manager: bun
 
   deploy:
     needs: build
