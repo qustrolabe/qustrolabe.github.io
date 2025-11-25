@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://qustrolabe.github.io/sitemap-index.xml
