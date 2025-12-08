@@ -4,11 +4,11 @@ import HeaderLink from "@components/HeaderLink.astro";
 ---
 
 <header
-	class="flex bg-surface border-surface-border h-10 justify-center border-b overflow-hidden"
+	class="flex bg-surface border-surface-border justify-center border-b min-h-10"
 >
 	<nav class="w-full">
 		<div
-			class="w-full internal-links flex flex-nowrap justify-center gap-1"
+			class="w-full internal-links flex flex-wrap justify-center gap-1 items-center py-2"
 		>
 			<HeaderLink href="/">Home</HeaderLink>
 			<HeaderLink href="/blog/">Blog</HeaderLink>
