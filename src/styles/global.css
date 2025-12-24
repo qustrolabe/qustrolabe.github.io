@@ -83,6 +83,7 @@
 	margin-bottom: 3em !important;
 }
 
+
 body {
 	/* font-family: "Atkinson", sans-serif; */
 	font-family: Noto Sans Mono Variable, monospace;
@@ -137,3 +138,24 @@ a[href^="http"]:not(:has(img, svg))::after {
   font-size: 1.2em;
   color: white;
 } */
+
+html {
+  scrollbar-gutter: stable;
+}
+
+
+/* Style scrollbar */
+::-webkit-scrollbar {
+	width: 2px;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--color-surface);
+}
+
+::-webkit-scrollbar-thumb {
+	background: oklch(44.953% 0.00005 271.152);
+}
+::-webkit-scrollbar-thumb:hover {
+	background: oklch(100% 0.00011 271.152);
+}
