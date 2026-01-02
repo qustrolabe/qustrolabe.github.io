@@ -83,7 +83,6 @@
 	margin-bottom: 3em !important;
 }
 
-
 body {
 	/* font-family: "Atkinson", sans-serif; */
 	font-family: Noto Sans Mono Variable, monospace;
@@ -140,9 +139,8 @@ a[href^="http"]:not(:has(img, svg))::after {
 } */
 
 html {
-  scrollbar-gutter: stable;
+	scrollbar-gutter: stable;
 }
-
 
 /* Style scrollbar */
 ::-webkit-scrollbar {
@@ -158,4 +156,8 @@ html {
 }
 ::-webkit-scrollbar-thumb:hover {
 	background: oklch(100% 0.00011 271.152);
+}
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+	text-decoration: none;
 }
