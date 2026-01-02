@@ -20,6 +20,7 @@
     "astro-expressive-code": "^0.41.3",
     "lunarphase-js": "npm:lunarphase-js",
     "p5": "^2.1.1",
+    "rehype-autolink-headings": "npm:rehype-autolink-headings",
     "sharp": "^0.34.5",
     "solid-js": "^1.9.10",
     "tailwindcss": "^4.1.17",
