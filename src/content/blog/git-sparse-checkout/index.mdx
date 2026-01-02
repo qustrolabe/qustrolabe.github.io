@@ -26,13 +26,13 @@ git clone --filter=blob:none --no-checkout --depth 1 <repository-url>
 - `--no-checkout` - do not checkout
 - `--depth 1` - (optional) clone only the latest commit, helps with big history
 
-Then we go into cloned repository:
+Then we go into cloned repository
 
 ```bash
 cd <repo-name>
 ```
 
-Now we need to initialize sparse checkout with `--no-cone` - old-style pattern matching that allows negative filters:
+Now we need to initialize sparse checkout with `--no-cone` - old-style pattern matching that allows negative filters
 
 ```bash
 git sparse-checkout init --no-cone
@@ -44,7 +44,7 @@ Now we set patterns for sparse checkout. `/*` means include everything, `!/src/a
 git sparse-checkout set '/*' '!/src/assets/'
 ```
 
-Finally we checkout files, this will start download:
+Finally we checkout files, this will start download
 
 ```bash
 git checkout
@@ -52,5 +52,5 @@ git checkout
 
 # notes
 
-- Check more docs: https://git-scm.com/docs/git-sparse-checkout
+- Check more in the docs: https://git-scm.com/docs/git-sparse-checkout
 - You might also want to check default `--cone` - it's a high performace option for cases where running your filter patterns over millions of files would be too slow. But it's way less flexible - no negative filters and it downloads all files in root folder right away and all files in directories you add.
