@@ -16,8 +16,10 @@ export default defineConfig({
   site: "https://qustrolabe.github.io",
   integrations: [
     expressiveCode({
+      defaultProps: {
+        frame: "code",
+      },
       themes: ["gruvbox-dark-hard"],
-      frames: false,
     }),
     mdx(),
     sitemap(),
