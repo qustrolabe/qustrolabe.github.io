@@ -1,0 +1,18 @@
+<lunar-cycle>
+    <span></span>
+</lunar-cycle>
+
+<script>
+import { Moon } from "lunarphase-js";
+
+class LunarCycle extends HTMLElement {
+    connectedCallback() {
+        const emoji = Moon.lunarPhaseEmoji();
+        const lunarAgePercent = Moon.lunarAgePercent();
+
+        this.querySelector("span")!.innerHTML = `${emoji}`;
+    }
+}
+
+customElements.define("lunar-cycle", LunarCycle);
+</script>
