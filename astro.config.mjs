@@ -17,6 +17,7 @@ export default defineConfig({
   integrations: [
     expressiveCode({
       themes: ["gruvbox-dark-hard"],
+      frames: false,
     }),
     mdx(),
     sitemap(),
