@@ -11,6 +11,8 @@ import { rehypeHeadingIds } from "@astrojs/markdown-remark";
 
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
+import icon from "astro-icon";
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://qustrolabe.github.io",
@@ -24,6 +26,12 @@ export default defineConfig({
     mdx(),
     sitemap(),
     solidJs(),
+    icon({
+      include: {
+        mdi: ["github"],
+        "simple-icons": ["bluesky", "x", "telegram"],
+      },
+    }),
   ],
   vite: {
     plugins: [tailwindcss()],
