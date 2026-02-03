@@ -28,7 +28,7 @@ export default defineConfig({
     solidJs(),
     icon({
       include: {
-        mdi: ["github"],
+        mdi: ["github", "twitter"],
         "simple-icons": ["bluesky", "x", "telegram"],
       },
     }),
