@@ -1,7 +1,7 @@
 {
   "name": "qustrolabe.github.io",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -9,16 +9,16 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "4.3.13",
-    "@astrojs/rss": "4.0.15",
-    "@astrojs/sitemap": "3.7.0",
-    "@astrojs/solid-js": "^5.1.3",
-    "@astrojs/svelte": "7.2.5",
+    "@astrojs/mdx": "5.0.0",
+    "@astrojs/rss": "4.0.17",
+    "@astrojs/sitemap": "3.7.1",
+    "@astrojs/solid-js": "6.0.0",
+    "@astrojs/svelte": "8.0.0",
     "@iconify-json/mdi": "^1.2.3",
     "@iconify-json/simple-icons": "^1.2.69",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.1.18",
-    "astro": "5.17.1",
+    "astro": "6.0.4",
     "astro-expressive-code": "^0.41.6",
     "astro-icon": "^1.1.5",
     "lunarphase-js": "^2.0.3",
