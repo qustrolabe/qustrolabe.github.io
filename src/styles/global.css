@@ -60,6 +60,11 @@
 		@apply text-sm;
 	}
 
+	hr {
+		@apply border-surface-border/60;
+		border-width: 1px 0 0 0;
+	}
+
 	/* Language label */
 	/* pre::before {
 		content: attr(data-language);
@@ -98,7 +103,7 @@ main {
 	width: 768px;
 	max-width: calc(100% - 1em);
 	margin: auto;
-	padding: 3em 1em;
+	/* padding: 1em 1em; */
 }
 
 @media (max-width: 48em) {
