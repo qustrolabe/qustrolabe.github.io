@@ -2,7 +2,8 @@
 import { SITE_TITLE } from "@consts";
 import HeaderLink from "@components/HeaderLink.astro";
 import { Icon } from "astro-icon/components";
-import SiteIcon from "@assets/icon.svg";
+import SiteIcon from "@assets/icon.webp";
+import { Image } from "astro:assets";
 ---
 
 <header
@@ -10,7 +11,14 @@ import SiteIcon from "@assets/icon.svg";
 >
 	<div class="flex items-center justify-between gap-4 pt-2 pb-2">
 		<div class="flex items-center gap-2 shrink-0">
-			<SiteIcon class="w-12 h-12" />
+			<Image
+				src={SiteIcon}
+				width={256}
+				height={256}
+				class="w-12 h-12"
+				alt=""
+			/>
+
 			<span class="text-lg font-semibold">{SITE_TITLE}</span>
 		</div>
 		<div class="flex gap-3 shrink-0" aria-label="Social links">
@@ -57,12 +65,17 @@ import SiteIcon from "@assets/icon.svg";
 		</div>
 	</div>
 	<nav class="flex flex-wrap items-center gap-1 justify-start pb-2">
-		<HeaderLink href="/" class="px-2 !no-underline text-sm">Home</HeaderLink>
-		<HeaderLink href="/blog/" class="px-2 !no-underline text-sm">Blog</HeaderLink>
+		<HeaderLink href="/" class="px-2 !no-underline text-sm">Home</HeaderLink
+		>
+		<HeaderLink href="/blog/" class="px-2 !no-underline text-sm"
+			>Blog</HeaderLink
+		>
 		<HeaderLink href="/projects/" class="px-2 !no-underline text-sm"
 			>Projects</HeaderLink
 		>
-		<HeaderLink href="/about/" class="px-2 !no-underline text-sm">About</HeaderLink>
+		<HeaderLink href="/about/" class="px-2 !no-underline text-sm"
+			>About</HeaderLink
+		>
 	</nav>
 	<hr class="border-surface-border/60" />
 </header>

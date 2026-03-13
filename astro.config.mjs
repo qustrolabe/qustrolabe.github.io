@@ -17,7 +17,8 @@ import icon from "astro-icon";
 export default defineConfig({
   experimental: {
     // relies on package @astrojs/compiler-rs that probably needs removing once compiler-rs goes out of experimental
-    rustCompiler: true 
+    rustCompiler: true, 
+    svgo: true
   },
   site: "https://qustrolabe.github.io",
   integrations: [
