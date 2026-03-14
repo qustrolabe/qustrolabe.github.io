@@ -4,23 +4,36 @@ import HeaderLink from "@components/HeaderLink.astro";
 import { Icon } from "astro-icon/components";
 import SiteIcon from "@assets/icon.webp";
 import { Image } from "astro:assets";
+
+const normalizePath = (path: string) =>
+	path !== "/" ? path.replace(/\/+$/, "") : "/";
+
+const isHomeActive = normalizePath(Astro.url.pathname) === "/";
 ---
 
 <header
 	class="min-h-10 w-[768px] max-w-[calc(100%-2em)] mx-auto px-[1.5em] max-[48em]:max-w-full max-[48em]:px-[0.75em]"
 >
 	<div class="flex items-center justify-between gap-4 pt-2 pb-2">
-		<div class="flex items-center gap-2 shrink-0">
+		<a
+			href="/"
+			aria-label="Home"
+			class:list={[
+				"inline-flex items-center gap-2 shrink-0 whitespace-nowrap !no-underline border-b-2 border-transparent",
+				isHomeActive &&
+					"text-[var(--color-highlight)] border-[var(--color-highlight)]",
+				"hover:text-[var(--color-highlight)]",
+			]}
+		>
 			<Image
 				src={SiteIcon}
 				width={256}
 				height={256}
-				class="w-12 h-12"
+				class="w-12 h-12 shrink-0 inline-block"
 				alt=""
 			/>
-
-			<span class="text-lg font-semibold">{SITE_TITLE}</span>
-		</div>
+			<span class="text-lg font-semibold leading-none">{SITE_TITLE}</span>
+		</a>
 		<div class="flex gap-3 shrink-0" aria-label="Social links">
 			<a
 				href="https://github.com/qustrolabe"
@@ -65,8 +78,6 @@ import { Image } from "astro:assets";
 		</div>
 	</div>
 	<nav class="flex flex-wrap items-center gap-1 justify-start pb-2">
-		<HeaderLink href="/" class="px-2 !no-underline text-sm">Home</HeaderLink
-		>
 		<HeaderLink href="/blog/" class="px-2 !no-underline text-sm"
 			>Blog</HeaderLink
 		>
