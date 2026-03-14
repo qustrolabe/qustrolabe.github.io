@@ -7,17 +7,30 @@ import "@styles/global.css";
 interface Props {
     title: string;
     description: string;
+    /**
+     * When true, the page will provide its own <main> / layout wrapper.
+     * When false (default), this layout wraps content in the standard main container.
+     */
+    customMain?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, customMain = false } = Astro.props;
 ---
 
-<html lang="en" class="">
+<html lang="en" class="" transition:animate="none">
     <Head title={title} description={description} />
 
     <body class="min-h-screen text-white bg-background">
         <Header />
-        <slot />
+        {
+            customMain ? (
+                <slot />
+            ) : (
+                <main class="w-[768px] max-w-[calc(100%-2em)] mx-auto px-[1.5em] max-[48em]:max-w-full max-[48em]:px-[0.75em] pt-4 pb-8">
+                    <slot />
+                </main>
+            )
+        }
         <!-- <Footer /> -->
     </body>
 </html>

@@ -99,23 +99,10 @@ body {
 	font-size: 20px;
 	line-height: 1.7;
 }
-main {
-	width: 768px;
-	max-width: calc(100% - 1em);
-	margin: auto;
-	/* padding: 1em 1em; */
-}
-
 @media (max-width: 48em) {
 	/* body {
 		font-size: 18px;
 	} */
-	main {
-		max-width: calc(100%);
-		padding-top: 1em;
-		padding-left: 0;
-		padding-right: 0;
-	}
 }
 
 a {
