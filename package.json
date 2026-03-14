@@ -25,6 +25,7 @@
     "lunarphase-js": "^2.0.3",
     "p5": "^2.2.0",
     "rehype-autolink-headings": "^7.1.0",
+    "rehype-external-links": "^3.0.0",
     "sharp": "^0.34.5",
     "simple-icons": "^16.7.0",
     "solid-js": "^1.9.11",

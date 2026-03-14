@@ -10,6 +10,7 @@ import sitemap from "@astrojs/sitemap";
 import { rehypeHeadingIds } from "@astrojs/markdown-remark";
 
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeExternalLinks from "rehype-external-links";
 
 import icon from "astro-icon";
 
@@ -46,16 +47,26 @@ export default defineConfig({
     },
   },
   markdown: {
-    rehypePlugins: [rehypeHeadingIds, [
-      rehypeAutolinkHeadings,
-      {
-        behavior: "wrap",
-        properties: {
-          class: ["heading-link"],
-          title: "Link to heading",
+    rehypePlugins: [
+      rehypeHeadingIds,
+      [
+        rehypeAutolinkHeadings,
+        {
+          behavior: "wrap",
+          properties: {
+            class: ["heading-link"],
+            title: "Link to heading",
+          },
         },
-      },
-    ]],
+      ],
+      [
+        rehypeExternalLinks,
+        {
+          target: "_blank",
+          rel: ["noopener"],
+        },
+      ],
+    ],
   },
   prefetch: {
     prefetchAll: true,
