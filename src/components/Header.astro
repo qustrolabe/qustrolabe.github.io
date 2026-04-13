@@ -61,7 +61,7 @@ const isHomeActive = normalizePath(Astro.url.pathname) === "/";
 				target="_blank"
 				rel="me noopener noreferrer"
 				title="Bluesky"
-				class="p-1 hover:text-[var(--color-highlight)] focus-visible:text-[var(--color-highlight)]"
+				class="p-1 hover:text-highlight focus-visible:text-highlight"
 			>
 				<Icon name="simple-icons:bluesky" width="18" height="18" />
 			</a>
@@ -71,20 +71,20 @@ const isHomeActive = normalizePath(Astro.url.pathname) === "/";
 				target="_blank"
 				rel="me noopener noreferrer"
 				title="Telegram"
-				class="p-1 hover:text-[var(--color-highlight)] focus-visible:text-[var(--color-highlight)]"
+				class="p-1 hover:text-highlight focus-visible:text-highlight"
 			>
 				<Icon name="simple-icons:telegram" width="18" height="18" />
 			</a>
 		</div>
 	</div>
 	<nav class="flex flex-wrap items-center gap-1 justify-start pb-2">
-		<HeaderLink href="/blog/" class="px-2 !no-underline text-sm"
+		<HeaderLink href="/blog/" class="px-2 no-underline! text-sm"
 			>Blog</HeaderLink
 		>
-		<HeaderLink href="/projects/" class="px-2 !no-underline text-sm"
+		<HeaderLink href="/projects/" class="px-2 no-underline! text-sm"
 			>Projects</HeaderLink
 		>
-		<HeaderLink href="/about/" class="px-2 !no-underline text-sm"
+		<HeaderLink href="/about/" class="px-2 no-underline! text-sm"
 			>About</HeaderLink
 		>
 	</nav>

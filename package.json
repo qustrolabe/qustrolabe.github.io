@@ -23,7 +23,6 @@
     "astro-expressive-code": "^0.41.7",
     "astro-icon": "^1.1.5",
     "lunarphase-js": "^2.0.3",
-    "p5": "^2.2.3",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-external-links": "^3.0.0",
     "sharp": "^0.34.5",

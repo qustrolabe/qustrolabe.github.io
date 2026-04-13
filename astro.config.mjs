@@ -18,8 +18,8 @@ import icon from "astro-icon";
 export default defineConfig({
   experimental: {
     // relies on package @astrojs/compiler-rs that probably needs removing once compiler-rs goes out of experimental
-    rustCompiler: true, 
-    svgo: true
+    rustCompiler: true,
+    svgo: true,
   },
   site: "https://qustrolabe.github.io",
   integrations: [
@@ -44,6 +44,12 @@ export default defineConfig({
     build: {
       // minify: 'terser', // need terser dep
       // cssMinify: 'lightningcss'
+    },
+    optimizeDeps: {
+      exclude: ["p5"],
+    },
+    ssr: {
+      external: ["gifenc", "libtess"],
     },
   },
   markdown: {
