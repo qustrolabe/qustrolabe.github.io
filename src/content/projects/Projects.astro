@@ -1,32 +1,88 @@
 ---
 import { Icon } from "astro-icon/components";
+import { Image, type ImageMetadata } from "astro:assets";
 import { projects } from "./data";
+
+const images = import.meta.glob<ImageMetadata>(
+    "../../assets/projects/*.{webp,avif,png,jpg,jpeg,svg}",
+    { eager: true },
+);
+
+const getImage = (fileName?: string): ImageMetadata | undefined => {
+    if (!fileName) return undefined;
+    const image = images[`../../assets/projects/${fileName}`];
+    if (!image) {
+        throw new Error(
+            `Project image "${fileName}" not found in src/assets/projects/`,
+        );
+    }
+    return image;
+};
 ---
 
 <ul class="grid gap-4 sm:grid-cols-2 list-none! p-0! m-0!">
     {
-        projects.map((project) => (
-            <li>
-                <a
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="flex h-full flex-col gap-1 rounded-lg border border-surface-border p-4 no-underline! hover:border-highlight focus-visible:border-highlight transition-colors"
-                >
-                    <span class="flex items-center justify-between gap-2 font-semibold">
-                        {project.name}
-                        <Icon
-                            name="mdi:github"
-                            width="18"
-                            height="18"
-                            class="shrink-0 opacity-60"
+        projects.map((project) => {
+            const image = getImage(project.image);
+            const primaryHref = project.demoUrl ?? project.repoUrl;
+            return (
+                <li>
+                    <div class="relative flex h-full flex-col rounded-lg border border-surface-border transition-colors hover:border-highlight focus-within:border-highlight">
+                        {image && (
+                            <Image
+                                src={image}
+                                alt=""
+                                class="w-full rounded-t-lg border-b border-surface-border"
+                                loading="lazy"
+                            />
+                        )}
+                        <div class="flex flex-1 flex-col gap-1 p-4">
+                            <span class="flex items-center justify-between gap-2 font-semibold">
+                                <span class="flex items-center gap-2">
+                                    {project.icon && !image && (
+                                        <Icon
+                                            name={project.icon}
+                                            width="18"
+                                            height="18"
+                                            class="shrink-0 opacity-60"
+                                        />
+                                    )}
+                                    {project.name}
+                                </span>
+                                <a
+                                    href={project.repoUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={`${project.name} on GitHub`}
+                                    title="GitHub repository"
+                                    class="relative z-10 -m-1 p-1 opacity-60 hover:text-[var(--color-highlight)] hover:opacity-100"
+                                >
+                                    <Icon name="mdi:github" width="18" height="18" />
+                                </a>
+                            </span>
+                            <span class="text-sm text-neutral-400 leading-snug">
+                                {project.description}
+                            </span>
+                            {project.demoUrl && (
+                                <span class="mt-auto pt-2 text-sm">
+                                    try it out →
+                                </span>
+                            )}
+                        </div>
+                        <a
+                            href={primaryHref}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={
+                                project.demoUrl
+                                    ? `Open ${project.name}`
+                                    : `${project.name} on GitHub`
+                            }
+                            class="absolute inset-0 z-0 rounded-lg after:content-none!"
                         />
-                    </span>
-                    <span class="text-sm text-neutral-400 leading-snug">
-                        {project.description}
-                    </span>
-                </a>
-            </li>
-        ))
+                    </div>
+                </li>
+            );
+        })
     }
 </ul>
