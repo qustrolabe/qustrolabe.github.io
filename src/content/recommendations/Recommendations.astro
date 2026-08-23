@@ -20,12 +20,17 @@ const getImage = (fileName?: string): ImageMetadata | undefined => {
 };
 
 const typeIcons: Record<Recommendation["type"], string> = {
-    "TV Series": "mdi:television-classic",
-    "Video Game": "mdi:gamepad-variant",
-    Manhwa: "mdi:book-open-page-variant",
-    Anime: "mdi:animation-play",
     Movie: "mdi:movie-open",
+    "Animated Movie": "mdi:filmstrip",
+    "TV Series": "mdi:television-classic",
+    "Animated Series": "mdi:animation",
+    Anime: "mdi:animation-play",
     Book: "mdi:book",
+    Novel: "mdi:book-alphabet",
+    Manga: "mdi:book-open-variant",
+    Manhwa: "mdi:book-open-page-variant",
+    Webcomic: "mdi:web",
+    "Video Game": "mdi:gamepad-variant",
     Music: "mdi:music",
     Other: "mdi:star",
 };

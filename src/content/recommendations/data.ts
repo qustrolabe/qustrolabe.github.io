@@ -1,12 +1,17 @@
 export interface Recommendation {
     name: string;
     type:
-        | "TV Series"
-        | "Video Game"
-        | "Manhwa"
-        | "Anime"
         | "Movie"
+        | "Animated Movie"
+        | "TV Series"
+        | "Animated Series"
+        | "Anime"
         | "Book"
+        | "Novel"
+        | "Manga"
+        | "Manhwa"
+        | "Webcomic"
+        | "Video Game"
         | "Music"
         | "Other";
     year?: number;
@@ -21,7 +26,7 @@ export interface Recommendation {
 export const recommendations: Recommendation[] = [
     {
         name: "Pantheon",
-        type: "TV Series",
+        type: "Animated Series",
         year: 2022,
     },
     {
