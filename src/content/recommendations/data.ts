@@ -10,8 +10,12 @@ export interface Recommendation {
         | "Music"
         | "Other";
     year?: number;
-    description?: string;
     rating?: number;
+    description?: string;
+    /** External entry page (e.g. IMDb). When set, the whole card links there */
+    link?: string;
+    /** Image file name inside src/assets/recommendations/, shown as the poster */
+    image?: string;
 }
 
 export const recommendations: Recommendation[] = [

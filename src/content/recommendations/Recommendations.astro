@@ -1,36 +1,96 @@
 ---
-import Prose from "@components/Prose.astro";
-import { recommendations } from "./data";
+import { Icon } from "astro-icon/components";
+import { Image, type ImageMetadata } from "astro:assets";
+import { recommendations, type Recommendation } from "./data";
+
+const images = import.meta.glob<ImageMetadata>(
+    "../../assets/recommendations/*.{webp,avif,png,jpg,jpeg,svg}",
+    { eager: true },
+);
+
+const getImage = (fileName?: string): ImageMetadata | undefined => {
+    if (!fileName) return undefined;
+    const image = images[`../../assets/recommendations/${fileName}`];
+    if (!image) {
+        throw new Error(
+            `Recommendation image "${fileName}" not found in src/assets/recommendations/`,
+        );
+    }
+    return image;
+};
+
+const typeIcons: Record<Recommendation["type"], string> = {
+    "TV Series": "mdi:television-classic",
+    "Video Game": "mdi:gamepad-variant",
+    Manhwa: "mdi:book-open-page-variant",
+    Anime: "mdi:animation-play",
+    Movie: "mdi:movie-open",
+    Book: "mdi:book",
+    Music: "mdi:music",
+    Other: "mdi:star",
+};
 ---
 
-<Prose>
-    <p>Here are some things I recommend to watch/read/play/listen to:</p>
-    <table class="w-full border-collapse">
-        <thead>
-            <tr class="text-left">
-                <th
-                    class="py-2 pl-2 pr-2 border-r border-(--color-surface-border) font-semibold"
-                    >Name</th
-                >
-                <th
-                    class="py-2 pl-2 pr-2 border-l border-(--color-surface-border) font-semibold"
-                    >Description</th
-                >
-            </tr>
-        </thead>
-        <tbody>
-            {
-                recommendations.map((rec) => (
-                    <tr class="">
-                        <td class="py-2 pl-2 pr-2 border-r border-(--color-surface-border)">
-                            {rec.name}
-                        </td>
-                        <td class="py-2 pl-2 pr-2 border-l border-(--color-surface-border)">
-                            {rec.description}
-                        </td>
-                    </tr>
-                ))
-            }
-        </tbody>
-    </table>
-</Prose>
+<p class="mb-4 text-sm text-neutral-400">
+    Here are some things I recommend to watch/read/play/listen to:
+</p>
+<ul class="grid grid-cols-2 gap-4 sm:grid-cols-3 list-none! p-0! m-0!">
+    {
+        recommendations.map((rec) => {
+            const image = getImage(rec.image);
+            return (
+                <li>
+                    <div class="relative flex h-full flex-col overflow-hidden rounded-lg border border-surface-border transition-colors hover:border-highlight focus-within:border-highlight">
+                        <div class="aspect-[2/3] w-full border-b border-surface-border bg-surface">
+                            {image ? (
+                                <Image
+                                    src={image}
+                                    alt=""
+                                    class="h-full w-full object-cover"
+                                    loading="lazy"
+                                />
+                            ) : (
+                                <div class="flex h-full items-center justify-center">
+                                    <Icon
+                                        name={typeIcons[rec.type]}
+                                        width="48"
+                                        height="48"
+                                        class="opacity-30"
+                                    />
+                                </div>
+                            )}
+                        </div>
+                        <div class="flex flex-1 flex-col gap-0.5 p-3">
+                            <span class="font-semibold leading-tight">
+                                {rec.name}
+                            </span>
+                            <span class="text-xs text-neutral-400 tracking-wide uppercase">
+                                {rec.type}
+                                {rec.year && ` · ${rec.year}`}
+                            </span>
+                            {rec.rating !== undefined && (
+                                <span class="text-sm text-[var(--color-highlight)]">
+                                    ★ {rec.rating}
+                                </span>
+                            )}
+                            {rec.description && (
+                                <span class="mt-1 text-sm text-neutral-400 leading-snug">
+                                    {rec.description}
+                                </span>
+                            )}
+                        </div>
+                        {rec.link && (
+                            <a
+                                href={rec.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={`Open ${rec.name}`}
+                                class="absolute inset-0 z-0 after:content-none!"
+                            />
+                        )}
+                    </div>
+                </li>
+            );
+        })
+    }
+</ul>
