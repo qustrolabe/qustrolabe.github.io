@@ -1,5 +1,4 @@
 import type { ImageMetadata } from "astro";
-import { imageFiles } from "./images.gen";
 
 const PREFIX = "../../assets/projects/" as const;
 
@@ -8,19 +7,28 @@ const modules = import.meta.glob<{ default: ImageMetadata }>(
 	{ eager: true },
 );
 
-export type { ImageFile as ProjectImageFile } from "./images.gen";
+/**
+ * Card images are currently disabled. To re-enable:
+ *   1. add files to src/assets/projects/
+ *   2. run "bun run gen" (writes images.gen.ts listing them)
+ *   3. uncomment the next line and delete the placeholder below
+ */
+// import { imageFiles } from "./images.gen";
+const imageFiles = [] as const;
 
-// Fails the build if the generated list drifts out of sync with disk
+export type ProjectImageFile = (typeof imageFiles)[number];
+
+// Fails the build if the list drifts out of sync with disk
 for (const file of imageFiles) {
 	if (!modules[`${PREFIX}${file}`]) {
 		throw new Error(
-			`"${file}" is listed in src/content/projects/images.gen.ts but was not found in src/assets/projects/ — run "bun run gen"`,
+			`"${file}" is listed in src/content/projects/images.ts but was not found in src/assets/projects/`,
 		);
 	}
 }
 
 export function getProjectImage(
-	fileName: import("./images.gen").ImageFile | undefined,
+	fileName: ProjectImageFile | undefined,
 ): ImageMetadata | undefined {
 	if (!fileName) return undefined;
 	return modules[`${PREFIX}${fileName}`]?.default;
