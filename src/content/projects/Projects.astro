@@ -1,0 +1,32 @@
+---
+import { Icon } from "astro-icon/components";
+import { projects } from "./data";
+---
+
+<ul class="grid gap-4 sm:grid-cols-2 list-none! p-0! m-0!">
+    {
+        projects.map((project) => (
+            <li>
+                <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex h-full flex-col gap-1 rounded-lg border border-surface-border p-4 no-underline! hover:border-highlight focus-visible:border-highlight transition-colors"
+                >
+                    <span class="flex items-center justify-between gap-2 font-semibold">
+                        {project.name}
+                        <Icon
+                            name="mdi:github"
+                            width="18"
+                            height="18"
+                            class="shrink-0 opacity-60"
+                        />
+                    </span>
+                    <span class="text-sm text-neutral-400 leading-snug">
+                        {project.description}
+                    </span>
+                </a>
+            </li>
+        ))
+    }
+</ul>

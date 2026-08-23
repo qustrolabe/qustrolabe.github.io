@@ -1,12 +1,8 @@
 ---
 import MainLayout from "@layouts/MainLayout.astro";
-import Prose from "@components/Prose.astro";
-
-import ProjectsContent from "@content/projects.mdx";
+import ProjectsList from "@content/projects/Projects.astro";
 ---
 
 <MainLayout title="Projects" description="qustrolabe's projects.">
-    <Prose>
-        <ProjectsContent />
-    </Prose>
+    <ProjectsList />
 </MainLayout>
