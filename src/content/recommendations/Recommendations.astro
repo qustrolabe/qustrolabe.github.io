@@ -1,0 +1,36 @@
+---
+import Prose from "@components/Prose.astro";
+import { recommendations } from "./data";
+---
+
+<Prose>
+    <p>Here are some things I recommend to watch/read/play/listen to:</p>
+    <table class="w-full border-collapse">
+        <thead>
+            <tr class="text-left">
+                <th
+                    class="py-2 pl-2 pr-2 border-r border-(--color-surface-border) font-semibold"
+                    >Name</th
+                >
+                <th
+                    class="py-2 pl-2 pr-2 border-l border-(--color-surface-border) font-semibold"
+                    >Description</th
+                >
+            </tr>
+        </thead>
+        <tbody>
+            {
+                recommendations.map((rec) => (
+                    <tr class="">
+                        <td class="py-2 pl-2 pr-2 border-r border-(--color-surface-border)">
+                            {rec.name}
+                        </td>
+                        <td class="py-2 pl-2 pr-2 border-l border-(--color-surface-border)">
+                            {rec.description}
+                        </td>
+                    </tr>
+                ))
+            }
+        </tbody>
+    </table>
+</Prose>
