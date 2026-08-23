@@ -1,3 +1,5 @@
+import type { RecommendationImageFile } from "./images";
+
 export interface Recommendation {
     name: string;
     type:
@@ -19,8 +21,9 @@ export interface Recommendation {
     description?: string;
     /** External entry page (e.g. IMDb). When set, the whole card links there */
     link?: string;
-    /** Image file name inside src/assets/recommendations/, shown as the poster */
-    image?: string;
+    /** File name inside src/assets/recommendations/, shown as the poster.
+     *  TypeScript only accepts files that actually exist in that folder. */
+    image?: RecommendationImageFile;
 }
 
 export const recommendations: Recommendation[] = [

@@ -2,3 +2,4 @@ dist/
 .astro/
 package-lock.json
 src/assets/
+*.gen.ts

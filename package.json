@@ -4,8 +4,11 @@
     "version": "1.0.0",
     "scripts": {
         "dev": "astro dev",
+        "predev": "bun run gen",
         "build": "astro build",
+        "prebuild": "bun run gen",
         "preview": "astro preview",
+        "gen": "node scripts/generate-image-lists.mjs",
         "check": "astro check",
         "lint": "eslint .",
         "lint:fix": "eslint . --fix",

@@ -1,24 +1,8 @@
 ---
 import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
-import type { ImageMetadata } from "astro";
 import { recommendations, type Recommendation } from "./data";
-
-const images = import.meta.glob<ImageMetadata>(
-    "../../assets/recommendations/*.{webp,avif,png,jpg,jpeg,svg}",
-    { eager: true },
-);
-
-const getImage = (fileName?: string): ImageMetadata | undefined => {
-    if (!fileName) return undefined;
-    const image = images[`../../assets/recommendations/${fileName}`];
-    if (!image) {
-        throw new Error(
-            `Recommendation image "${fileName}" not found in src/assets/recommendations/`,
-        );
-    }
-    return image;
-};
+import { getRecommendationImage } from "./images";
 
 const typeIcons: Record<Recommendation["type"], string> = {
     Movie: "mdi:movie-open",
@@ -42,18 +26,10 @@ const typeIcons: Record<Recommendation["type"], string> = {
 <ul class="m-0! list-none! columns-2 gap-4 p-0! sm:columns-3">
     {
         recommendations.map((rec) => {
-            const image = getImage(rec.image);
+            const image = getRecommendationImage(rec.image);
             return (
                 <li class="mb-4 break-inside-avoid">
                     <div class="relative overflow-hidden rounded-lg border border-surface-border transition-colors focus-within:border-highlight hover:border-highlight">
-                        {image && (
-                            <Image
-                                src={image}
-                                alt=""
-                                class="w-full border-b border-surface-border"
-                                loading="lazy"
-                            />
-                        )}
                         {image ? (
                             <Image
                                 src={image}

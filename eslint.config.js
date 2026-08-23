@@ -9,7 +9,9 @@ const betterTailwindOptions = {
     attributes: ["class", "class:list"],
 };
 
-/** Append shared options to every rule coming from a plugin preset */
+/** Append shared options to every rule coming from a plugin preset.
+ *  @param {{ rules?: Record<string, unknown> } | Array<{ rules?: Record<string, unknown> }>} preset
+ *  @returns {any[]} */
 const withOptions = (preset) =>
     (Array.isArray(preset) ? preset : [preset]).map((config) => ({
         ...config,
