@@ -115,7 +115,7 @@ export default function CanvasDemo() {
 
     return (
         <div class="flex flex-col gap-4">
-            <div class="flex flex-wrap items-center gap-4 p-3 bg-zinc-800 rounded-lg">
+            <div class="flex flex-wrap items-center gap-4 rounded-lg bg-zinc-800 p-3">
                 <div class="flex items-center gap-2">
                     <label class="text-sm text-zinc-400">Velocity</label>
                     <input
@@ -131,7 +131,7 @@ export default function CanvasDemo() {
                             })}
                         class="w-24 accent-emerald-500"
                     />
-                    <span class="text-sm text-zinc-200 w-6">
+                    <span class="w-6 text-sm text-zinc-200">
                         {inputs().velocity}
                     </span>
                 </div>
@@ -150,13 +150,13 @@ export default function CanvasDemo() {
                             })}
                         class="w-24 accent-emerald-500"
                     />
-                    <span class="text-sm text-zinc-200 w-6">
+                    <span class="w-6 text-sm text-zinc-200">
                         {inputs().radius}
                     </span>
                 </div>
-                <div class="flex items-center gap-2 ml-2">
+                <div class="ml-2 flex items-center gap-2">
                     <button
-                        class="px-3 py-1.5 text-sm font-medium bg-zinc-700 hover:bg-zinc-600 text-zinc-200 rounded transition-colors"
+                        class="rounded-sm bg-zinc-700 px-3 py-1.5 text-sm font-medium text-zinc-200 transition-colors hover:bg-zinc-600"
                         onClick={() =>
                             setInputs({
                                 ...inputs(),
@@ -166,7 +166,7 @@ export default function CanvasDemo() {
                         Reset
                     </button>
                     <button
-                        class="px-3 py-1.5 text-sm font-medium bg-zinc-700 hover:bg-zinc-600 text-zinc-200 rounded transition-colors"
+                        class="rounded-sm bg-zinc-700 px-3 py-1.5 text-sm font-medium text-zinc-200 transition-colors hover:bg-zinc-600"
                         onClick={() =>
                             setInputs({
                                 ...inputs(),
@@ -176,7 +176,7 @@ export default function CanvasDemo() {
                         Flip X
                     </button>
                     <button
-                        class="px-3 py-1.5 text-sm font-medium bg-zinc-700 hover:bg-zinc-600 text-zinc-200 rounded transition-colors"
+                        class="rounded-sm bg-zinc-700 px-3 py-1.5 text-sm font-medium text-zinc-200 transition-colors hover:bg-zinc-600"
                         onClick={() =>
                             setInputs({
                                 ...inputs(),
@@ -186,7 +186,7 @@ export default function CanvasDemo() {
                         Flip Y
                     </button>
                 </div>
-                <div class="flex items-center gap-2 ml-auto text-xs font-mono text-zinc-400">
+                <div class="ml-auto flex items-center gap-2 font-mono text-xs text-zinc-400">
                     <span>x: {Math.round(outputs().x)}</span>
                     <span class="text-zinc-600">|</span>
                     <span>y: {Math.round(outputs().y)}</span>
@@ -197,7 +197,7 @@ export default function CanvasDemo() {
                 </div>
             </div>
 
-            <div class="w-full aspect-square max-w-[500px] mx-auto rounded-lg overflow-hidden">
+            <div class="mx-auto aspect-square w-full max-w-[500px] overflow-hidden rounded-lg">
                 <CanvasSketch
                     width={1500}
                     height={500}

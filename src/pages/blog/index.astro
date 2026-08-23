@@ -11,7 +11,7 @@ const posts = (await getCollection("blog")).sort(
 
 <MainLayout title={"Blog"} description={SITE_DESCRIPTION}>
 	<section>
-		<ul class="list-none m-0 p-0">
+		<ul class="m-0 list-none p-0">
 			{
 				posts.map((post) => (
 					<PostCard

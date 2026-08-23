@@ -16,30 +16,30 @@ const { pubDate, title, id, description } = Astro.props;
     <a
         href={`/blog/${id}`}
         class="group
-         p-2
          m-1
+         w-full
+         p-2
+        
          text-white
         
-         w-full
-        
-         active:text-highlight!
+         no-underline!
          hover:text-highlight!
         
-         no-underline!"
+         active:text-highlight!"
     >
         <p
-            class="text-gray-200 text-sm group-active:text-highlight!
-         group-hover:text-highlight!"
+            class="text-sm text-gray-200 group-hover:text-highlight!
+         group-active:text-highlight!"
         >
             <FormattedDate date={pubDate} />
         </p>
-        <h1 class="text-1xl">
+        <h1 class="text-xl">
             {title}
         </h1>
         <p
-            class="text-sm
-             text-gray-400
-             truncate overflow-hidden text-ellipsis whitespace-nowrap"
+            class="truncate
+             overflow-hidden
+             text-sm text-ellipsis whitespace-nowrap text-gray-400"
         >
             {description}
         </p>

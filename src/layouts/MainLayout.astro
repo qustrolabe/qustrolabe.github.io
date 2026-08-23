@@ -20,13 +20,13 @@ const { title, description, customMain = false } = Astro.props;
 <html lang="en" class="" transition:animate="none">
     <Head title={title} description={description} />
 
-    <body class="min-h-screen text-white bg-background">
+    <body class="min-h-screen bg-background text-white">
         <Header />
         {
             customMain ? (
                 <slot />
             ) : (
-                <main class="w-[768px] max-w-[calc(100%-2em)] mx-auto px-[1.5em] max-[48em]:max-w-full max-[48em]:px-[0.75em] pt-4 pb-8">
+                <main class="mx-auto w-[768px] max-w-[calc(100%-2em)] px-[1.5em] pt-4 pb-8 max-[48em]:max-w-full max-[48em]:px-[0.75em]">
                     <slot />
                 </main>
             )

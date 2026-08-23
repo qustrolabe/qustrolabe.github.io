@@ -12,9 +12,9 @@ const isHomeActive = normalizePath(Astro.url.pathname) === "/";
 ---
 
 <header
-	class="min-h-10 max-w-[768px] mx-auto px-[1.5em] max-[48em]:max-w-full max-[48em]:px-[0.75em]"
+	class="mx-auto min-h-10 max-w-[768px] px-[1.5em] max-[48em]:max-w-full max-[48em]:px-[0.75em]"
 >
-	<div class="flex flex-wrap items-center justify-between gap-4 pt-2 pb-2">
+	<div class="flex flex-wrap items-center justify-between gap-4 py-2">
 		<a
 			href="/"
 			aria-label="Home"
@@ -29,10 +29,10 @@ const isHomeActive = normalizePath(Astro.url.pathname) === "/";
 				src={SiteIcon}
 				width={256}
 				height={256}
-				class="w-12 h-12 shrink-0 inline-block"
+				class="inline-block size-12 shrink-0"
 				alt=""
 			/>
-			<span class="text-lg font-semibold leading-none">{SITE_TITLE}</span>
+			<span class="text-lg leading-none font-semibold">{SITE_TITLE}</span>
 		</a>
 		<div
 			class="flex flex-wrap items-center gap-3"
@@ -44,7 +44,7 @@ const isHomeActive = normalizePath(Astro.url.pathname) === "/";
 				target="_blank"
 				rel="me noopener noreferrer"
 				title="GitHub"
-				class="p-1 hover:text-[var(--color-highlight)] focus-visible:text-[var(--color-highlight)]"
+				class="p-1 hover:text-highlight focus-visible:text-highlight"
 			>
 				<Icon name="mdi:github" width="20" height="20" />
 			</a>
@@ -54,7 +54,7 @@ const isHomeActive = normalizePath(Astro.url.pathname) === "/";
 				target="_blank"
 				rel="me noopener noreferrer"
 				title="X / Twitter"
-				class="p-1 hover:text-[var(--color-highlight)] focus-visible:text-[var(--color-highlight)]"
+				class="p-1 hover:text-highlight focus-visible:text-highlight"
 			>
 				<Icon name="mdi:twitter" width="18" height="18" />
 			</a>
@@ -80,14 +80,14 @@ const isHomeActive = normalizePath(Astro.url.pathname) === "/";
 			</a>
 		</div>
 	</div>
-	<nav class="flex flex-wrap items-center gap-1 justify-start pb-2">
-		<HeaderLink href="/blog/" class="px-2 no-underline! text-sm"
+	<nav class="flex flex-wrap items-center justify-start gap-1 pb-2">
+		<HeaderLink href="/blog/" class="px-2 text-sm no-underline!"
 			>Blog</HeaderLink
 		>
-		<HeaderLink href="/projects/" class="px-2 no-underline! text-sm"
+		<HeaderLink href="/projects/" class="px-2 text-sm no-underline!"
 			>Projects</HeaderLink
 		>
-		<HeaderLink href="/about/" class="px-2 no-underline! text-sm"
+		<HeaderLink href="/about/" class="px-2 text-sm no-underline!"
 			>About</HeaderLink
 		>
 		<!-- <HeaderLink href="/recommendations/" class="px-2 no-underline! text-sm"

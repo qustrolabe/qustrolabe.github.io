@@ -37,13 +37,13 @@ const typeIcons: Record<Recommendation["type"], string> = {
 };
 ---
 
-<ul class="columns-2 gap-4 sm:columns-3 list-none! p-0! m-0!">
+<ul class="m-0! list-none! columns-2 gap-4 p-0! sm:columns-3">
     {
         recommendations.map((rec) => {
             const image = getImage(rec.image);
             return (
                 <li class="mb-4 break-inside-avoid">
-                    <div class="relative overflow-hidden rounded-lg border border-surface-border transition-colors hover:border-highlight focus-within:border-highlight">
+                    <div class="relative overflow-hidden rounded-lg border border-surface-border transition-colors focus-within:border-highlight hover:border-highlight">
                         {image && (
                             <Image
                                 src={image}
@@ -60,7 +60,7 @@ const typeIcons: Record<Recommendation["type"], string> = {
                                 loading="lazy"
                             />
                         ) : (
-                            <div class="flex aspect-[2/1] w-full items-center justify-center border-b border-surface-border bg-surface">
+                            <div class="flex aspect-2/1 w-full items-center justify-center border-b border-surface-border bg-surface">
                                 <Icon
                                     name={typeIcons[rec.type]}
                                     width="28"
@@ -70,21 +70,21 @@ const typeIcons: Record<Recommendation["type"], string> = {
                             </div>
                         )}
                         <div class="flex flex-col gap-0.5 p-3">
-                            <span class="font-semibold leading-tight">
+                            <span class="leading-tight font-semibold">
                                 {rec.name}
                             </span>
-                            <span class="text-xs text-neutral-400 tracking-wide uppercase">
+                            <span class="text-xs tracking-wide text-neutral-400 uppercase">
                                 {rec.type}
                                 {rec.year && ` · ${rec.year}`}
                                 {rec.rating !== undefined && (
-                                    <span class="text-[var(--color-highlight)]">
+                                    <span class="text-highlight">
                                         {" "}
                                         · ★ {rec.rating}
                                     </span>
                                 )}
                             </span>
                             {rec.description && (
-                                <span class="mt-1 text-sm text-neutral-400 leading-snug">
+                                <span class="mt-1 text-sm/snug text-neutral-400">
                                     {rec.description}
                                 </span>
                             )}
