@@ -37,9 +37,14 @@ export default function CanvasDemo() {
         vy: 0,
     });
 
-    const sketch: SketchFn<DemoInputs, DemoOutputs> = (
-        { ctx, width, height, inputs, onCleanup, onOutput },
-    ) => {
+    const sketch: SketchFn<DemoInputs, DemoOutputs> = ({
+        ctx,
+        width,
+        height,
+        inputs,
+        onCleanup,
+        onOutput,
+    }) => {
         let x = 250;
         let y = 250;
         let dirX = 1;
@@ -128,12 +133,11 @@ export default function CanvasDemo() {
                             setInputs({
                                 ...inputs(),
                                 velocity: Number(e.currentTarget.value),
-                            })}
+                            })
+                        }
                         class="w-24 accent-emerald-500"
                     />
-                    <span class="w-6 text-sm text-zinc-200">
-                        {inputs().velocity}
-                    </span>
+                    <span class="w-6 text-sm text-zinc-200">{inputs().velocity}</span>
                 </div>
                 <div class="flex items-center gap-2">
                     <label class="text-sm text-zinc-400">Radius</label>
@@ -147,12 +151,11 @@ export default function CanvasDemo() {
                             setInputs({
                                 ...inputs(),
                                 radius: Number(e.currentTarget.value),
-                            })}
+                            })
+                        }
                         class="w-24 accent-emerald-500"
                     />
-                    <span class="w-6 text-sm text-zinc-200">
-                        {inputs().radius}
-                    </span>
+                    <span class="w-6 text-sm text-zinc-200">{inputs().radius}</span>
                 </div>
                 <div class="ml-2 flex items-center gap-2">
                     <button
@@ -161,7 +164,8 @@ export default function CanvasDemo() {
                             setInputs({
                                 ...inputs(),
                                 reset: inputs().reset + 1,
-                            })}
+                            })
+                        }
                     >
                         Reset
                     </button>
@@ -171,7 +175,8 @@ export default function CanvasDemo() {
                             setInputs({
                                 ...inputs(),
                                 flipX: inputs().flipX + 1,
-                            })}
+                            })
+                        }
                     >
                         Flip X
                     </button>
@@ -181,7 +186,8 @@ export default function CanvasDemo() {
                             setInputs({
                                 ...inputs(),
                                 flipY: inputs().flipY + 1,
-                            })}
+                            })
+                        }
                     >
                         Flip Y
                     </button>

@@ -17,80 +17,80 @@ import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
-  compressHTML: true,
-  site: "https://qustrolabe.github.io",
-  integrations: [
-    expressiveCode({
-      defaultProps: {
-        frame: "code",
-      },
-      themes: ["gruvbox-dark-hard"],
-    }),
-    mdx(),
-    sitemap(),
-    solidJs(),
-    icon({
-      include: {
-        mdi: [
-          "github",
-          "twitter",
-          "television-classic",
-          "filmstrip",
-          "animation",
-          "animation-play",
-          "gamepad-variant",
-          "book-open-page-variant",
-          "book-open-variant",
-          "book-alphabet",
-          "web",
-          "movie-open",
-          "book",
-          "music",
-          "star",
-        ],
-        "simple-icons": ["bluesky", "x", "telegram"],
-      },
-    }),
-  ],
-  vite: {
-    plugins: [tailwindcss()],
-    build: {
-      // minify: 'terser', // need terser dep
-      // cssMinify: 'lightningcss'
-    },
-    optimizeDeps: {
-      exclude: ["p5"],
-    },
-    ssr: {
-      external: ["gifenc", "libtess"],
-    },
-  },
-  markdown: {
-    processor: unified({
-      rehypePlugins: [
-        rehypeHeadingIds,
-        [
-          rehypeAutolinkHeadings,
-          {
-            behavior: "wrap",
-            properties: {
-              class: ["heading-link"],
-              title: "Link to heading",
+    compressHTML: true,
+    site: "https://qustrolabe.github.io",
+    integrations: [
+        expressiveCode({
+            defaultProps: {
+                frame: "code",
             },
-          },
-        ],
-        [
-          rehypeExternalLinks,
-          {
-            target: "_blank",
-            rel: ["noopener"],
-          },
-        ],
-      ],
-    }),
-  },
-  prefetch: {
-    prefetchAll: true,
-    defaultStrategy: "viewport",
-  },
+            themes: ["gruvbox-dark-hard"],
+        }),
+        mdx(),
+        sitemap(),
+        solidJs(),
+        icon({
+            include: {
+                mdi: [
+                    "github",
+                    "twitter",
+                    "television-classic",
+                    "filmstrip",
+                    "animation",
+                    "animation-play",
+                    "gamepad-variant",
+                    "book-open-page-variant",
+                    "book-open-variant",
+                    "book-alphabet",
+                    "web",
+                    "movie-open",
+                    "book",
+                    "music",
+                    "star",
+                ],
+                "simple-icons": ["bluesky", "x", "telegram"],
+            },
+        }),
+    ],
+    vite: {
+        plugins: [tailwindcss()],
+        build: {
+            // minify: 'terser', // need terser dep
+            // cssMinify: 'lightningcss'
+        },
+        optimizeDeps: {
+            exclude: ["p5"],
+        },
+        ssr: {
+            external: ["gifenc", "libtess"],
+        },
+    },
+    markdown: {
+        processor: unified({
+            rehypePlugins: [
+                rehypeHeadingIds,
+                [
+                    rehypeAutolinkHeadings,
+                    {
+                        behavior: "wrap",
+                        properties: {
+                            class: ["heading-link"],
+                            title: "Link to heading",
+                        },
+                    },
+                ],
+                [
+                    rehypeExternalLinks,
+                    {
+                        target: "_blank",
+                        rel: ["noopener"],
+                    },
+                ],
+            ],
+        }),
+    },
+    prefetch: {
+        prefetchAll: true,
+        defaultStrategy: "viewport",
+    },
 });

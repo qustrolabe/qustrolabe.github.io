@@ -3,15 +3,15 @@
 </lunar-cycle>
 
 <script>
-import { Moon } from "lunarphase-js";
+    import { Moon } from "lunarphase-js";
 
-class LunarCycle extends HTMLElement {
-    connectedCallback() {
-        const emoji = Moon.lunarPhaseEmoji();
+    class LunarCycle extends HTMLElement {
+        connectedCallback() {
+            const emoji = Moon.lunarPhaseEmoji();
 
-        this.querySelector("span")!.innerHTML = `${emoji}`;
+            this.querySelector("span")!.innerHTML = `${emoji}`;
+        }
     }
-}
 
-customElements.define("lunar-cycle", LunarCycle);
+    customElements.define("lunar-cycle", LunarCycle);
 </script>

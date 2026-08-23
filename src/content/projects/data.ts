@@ -30,8 +30,7 @@ export const projects: Project[] = [
     {
         name: "prompt-manager",
         repoUrl: "https://github.com/qustrolabe/prompt-manager",
-        description:
-            "prompt manager with tags (intended for image generation prompts)",
+        description: "prompt manager with tags (intended for image generation prompts)",
     },
     {
         name: "chant",

@@ -5,23 +5,23 @@ import PostCard from "@components/PostCard.astro";
 import MainLayout from "@layouts/MainLayout.astro";
 
 const posts = (await getCollection("blog")).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
 
 <MainLayout title={"Blog"} description={SITE_DESCRIPTION}>
-	<section>
-		<ul class="m-0 list-none p-0">
-			{
-				posts.map((post) => (
-					<PostCard
-						pubDate={post.data.pubDate}
-						title={post.data.title}
-						id={post.id}
-						description={post.data.description ?? ""}
-					/>
-				))
-			}
-		</ul>
-	</section>
+    <section>
+        <ul class="m-0 list-none p-0">
+            {
+                posts.map((post) => (
+                    <PostCard
+                        pubDate={post.data.pubDate}
+                        title={post.data.title}
+                        id={post.id}
+                        description={post.data.description ?? ""}
+                    />
+                ))
+            }
+        </ul>
+    </section>
 </MainLayout>

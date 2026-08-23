@@ -7,30 +7,24 @@ const { href, class: className, ...props } = Astro.props;
 const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
 const subpath = pathname.match(/[^\/]+/g);
 
-const normalizePath = (path: string) =>
-	path !== "/" ? path.replace(/\/+$/, "") : "/";
+const normalizePath = (path: string) => (path !== "/" ? path.replace(/\/+$/, "") : "/");
 
 const currentPath = normalizePath(Astro.url.pathname);
 const targetPath = normalizePath(href?.toString() ?? "");
 const isActive =
-	targetPath === currentPath ||
-	(targetPath !== "/" && currentPath.startsWith(targetPath + "/"));
+    targetPath === currentPath || (targetPath !== "/" && currentPath.startsWith(targetPath + "/"));
 ---
 
-<a
-	href={href}
-	class:list={[className, isActive && "active"]}
-	{...props}
->
-	<slot />
+<a href={href} class:list={[className, isActive && "active"]} {...props}>
+    <slot />
 </a>
 <style>
-	a {
-		display: inline-block;
-		border-bottom: 2px solid transparent;
-	}
-	a.active {
-		color: var(--color-highlight);
-		border-bottom-color: var(--color-highlight);
-	}
+    a {
+        display: inline-block;
+        border-bottom: 2px solid transparent;
+    }
+    a.active {
+        color: var(--color-highlight);
+        border-bottom-color: var(--color-highlight);
+    }
 </style>

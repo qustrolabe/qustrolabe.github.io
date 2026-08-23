@@ -70,17 +70,12 @@ const typeIcons: Record<Recommendation["type"], string> = {
                             </div>
                         )}
                         <div class="flex flex-col gap-0.5 p-3">
-                            <span class="leading-tight font-semibold">
-                                {rec.name}
-                            </span>
+                            <span class="leading-tight font-semibold">{rec.name}</span>
                             <span class="text-xs tracking-wide text-neutral-400 uppercase">
                                 {rec.type}
                                 {rec.year && ` · ${rec.year}`}
                                 {rec.rating !== undefined && (
-                                    <span class="text-highlight">
-                                        {" "}
-                                        · ★ {rec.rating}
-                                    </span>
+                                    <span class="text-highlight"> · ★ {rec.rating}</span>
                                 )}
                             </span>
                             {rec.description && (
