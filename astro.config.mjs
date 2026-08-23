@@ -8,6 +8,7 @@ import expressiveCode from "astro-expressive-code";
 import sitemap from "@astrojs/sitemap";
 
 import { rehypeHeadingIds } from "@astrojs/markdown-remark";
+import { unified } from "@astrojs/markdown-remark";
 
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeExternalLinks from "rehype-external-links";
@@ -16,11 +17,7 @@ import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
-  experimental: {
-    // relies on package @astrojs/compiler-rs that probably needs removing once compiler-rs goes out of experimental
-    rustCompiler: true,
-    svgo: true,
-  },
+  compressHTML: true,
   site: "https://qustrolabe.github.io",
   integrations: [
     expressiveCode({
@@ -69,26 +66,28 @@ export default defineConfig({
     },
   },
   markdown: {
-    rehypePlugins: [
-      rehypeHeadingIds,
-      [
-        rehypeAutolinkHeadings,
-        {
-          behavior: "wrap",
-          properties: {
-            class: ["heading-link"],
-            title: "Link to heading",
+    processor: unified({
+      rehypePlugins: [
+        rehypeHeadingIds,
+        [
+          rehypeAutolinkHeadings,
+          {
+            behavior: "wrap",
+            properties: {
+              class: ["heading-link"],
+              title: "Link to heading",
+            },
           },
-        },
+        ],
+        [
+          rehypeExternalLinks,
+          {
+            target: "_blank",
+            rel: ["noopener"],
+          },
+        ],
       ],
-      [
-        rehypeExternalLinks,
-        {
-          target: "_blank",
-          rel: ["noopener"],
-        },
-      ],
-    ],
+    }),
   },
   prefetch: {
     prefetchAll: true,
