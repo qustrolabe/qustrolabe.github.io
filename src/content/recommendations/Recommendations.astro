@@ -36,48 +36,43 @@ const typeIcons: Record<Recommendation["type"], string> = {
 };
 ---
 
-<p class="mb-4 text-sm text-neutral-400">
-    Here are some things I recommend to watch/read/play/listen to:
-</p>
-<ul class="grid grid-cols-2 gap-4 sm:grid-cols-3 list-none! p-0! m-0!">
+<ul class="columns-2 gap-4 sm:columns-3 list-none! p-0! m-0!">
     {
         recommendations.map((rec) => {
             const image = getImage(rec.image);
             return (
-                <li>
-                    <div class="relative flex h-full flex-col overflow-hidden rounded-lg border border-surface-border transition-colors hover:border-highlight focus-within:border-highlight">
-                        <div class="aspect-[2/3] w-full border-b border-surface-border bg-surface">
-                            {image ? (
-                                <Image
-                                    src={image}
-                                    alt=""
-                                    class="h-full w-full object-cover"
-                                    loading="lazy"
-                                />
-                            ) : (
-                                <div class="flex h-full items-center justify-center">
+                <li class="mb-4 break-inside-avoid">
+                    <div class="relative overflow-hidden rounded-lg border border-surface-border transition-colors hover:border-highlight focus-within:border-highlight">
+                        {image && (
+                            <Image
+                                src={image}
+                                alt=""
+                                class="w-full border-b border-surface-border"
+                                loading="lazy"
+                            />
+                        )}
+                        <div class="flex flex-col gap-0.5 p-3">
+                            <span class="flex items-center gap-1.5 font-semibold leading-tight">
+                                {!image && (
                                     <Icon
                                         name={typeIcons[rec.type]}
-                                        width="48"
-                                        height="48"
-                                        class="opacity-30"
+                                        width="14"
+                                        height="14"
+                                        class="shrink-0 opacity-60"
                                     />
-                                </div>
-                            )}
-                        </div>
-                        <div class="flex flex-1 flex-col gap-0.5 p-3">
-                            <span class="font-semibold leading-tight">
+                                )}
                                 {rec.name}
                             </span>
                             <span class="text-xs text-neutral-400 tracking-wide uppercase">
                                 {rec.type}
                                 {rec.year && ` · ${rec.year}`}
+                                {rec.rating !== undefined && (
+                                    <span class="text-[var(--color-highlight)]">
+                                        {" "}
+                                        · ★ {rec.rating}
+                                    </span>
+                                )}
                             </span>
-                            {rec.rating !== undefined && (
-                                <span class="text-sm text-[var(--color-highlight)]">
-                                    ★ {rec.rating}
-                                </span>
-                            )}
                             {rec.description && (
                                 <span class="mt-1 text-sm text-neutral-400 leading-snug">
                                     {rec.description}
