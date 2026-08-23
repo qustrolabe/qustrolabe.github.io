@@ -47,9 +47,9 @@ import { getProjectImage } from "./images";
                                 </a>
                             </span>
                             <span class="text-sm/snug text-neutral-400">{project.description}</span>
-                            {project.demoUrl && (
-                                <span class="mt-auto pt-2 text-sm">try it out →</span>
-                            )}
+                            <span class="mt-auto pt-2 text-sm">
+                                {project.demoUrl ? "run in browser" : "open GitHub"}
+                            </span>
                         </div>
                         <a
                             href={primaryHref}

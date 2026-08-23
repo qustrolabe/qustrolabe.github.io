@@ -26,6 +26,7 @@ export const projects: Project[] = [
         name: "search-bangs",
         repoUrl: "https://github.com/qustrolabe/search-bangs",
         description: "search engine router script that supports !bangs",
+        demoUrl: "https://qustrolabe.github.io/search-bangs/",
     },
     {
         name: "prompt-manager",
@@ -52,5 +53,11 @@ export const projects: Project[] = [
         name: "imgvec",
         repoUrl: "https://github.com/qustrolabe/imgvec",
         description: "CLI image similarity indexing tool built in Rust",
+    },
+    {
+        name: "sunclock",
+        repoUrl: "https://github.com/qustrolabe/sunclock",
+        description: "in-browser day/night terminator and sun position clock",
+        demoUrl: "https://qustrolabe.github.io/sunclock/",
     },
 ];
