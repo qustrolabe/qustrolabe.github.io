@@ -203,7 +203,7 @@ export default function CanvasDemo() {
                 </div>
             </div>
 
-            <div class="mx-auto aspect-square w-full max-w-[500px] overflow-hidden rounded-lg">
+            <div class="relative mx-auto aspect-3/1 w-full overflow-hidden rounded-lg">
                 <CanvasSketch
                     width={1500}
                     height={500}

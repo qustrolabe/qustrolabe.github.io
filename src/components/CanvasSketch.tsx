@@ -31,6 +31,13 @@ interface CanvasSketchProps<TInputs, TOutputs> {
  * Parent controls inputs (sliders, buttons), sketch reads them each frame.
  * Sketch pushes outputs back for display panel.
  *
+ * The sketch always works in the coordinate space given by the width/height props,
+ * on every device. Those are also the backing store, and the element is scaled down
+ * to fill the box, so a smaller box is the same drawing at a different size rather
+ * than a different drawing. The caller reserves the space in CSS and should give the
+ * box the same aspect ratio as the canvas, otherwise the scale is uneven and the
+ * sketch comes out stretched.
+ *
  * @example
  * ```tsx
  * type DemoInputs = { velocity: number; radius: number; reset: number };
@@ -39,13 +46,15 @@ interface CanvasSketchProps<TInputs, TOutputs> {
  * const [inputs, setInputs] = createSignal<DemoInputs>({ velocity: 3, radius: 30, reset: 0 });
  * const [outputs, setOutputs] = createSignal<DemoOutputs>({ x: 0, y: 0, vx: 0, vy: 0 });
  *
- * <CanvasSketch<DemoInputs, DemoOutputs>
- *   width={500}
- *   height={500}
- *   inputs={inputs}
- *   outputs={setOutputs}
- *   sketch={({ ctx, width, height, inputs, onCleanup, onOutput }) => { ... }}
- * />
+ * <div class="relative aspect-[3/1] w-full max-w-[500px]">
+ *   <CanvasSketch<DemoInputs, DemoOutputs>
+ *     width={1500}
+ *     height={500}
+ *     inputs={inputs}
+ *     outputs={setOutputs}
+ *     sketch={({ ctx, width, height, inputs, onCleanup, onOutput }) => { ... }}
+ *   />
+ * </div>
  * ```
  */
 export default function CanvasSketch<TInputs, TOutputs>(
@@ -60,6 +69,12 @@ export default function CanvasSketch<TInputs, TOutputs>(
         const canvas = document.createElement("canvas");
         canvas.width = props.width;
         canvas.height = props.height;
+        // Fills the box, which the caller sized with the same aspect ratio, so the
+        // browser scales the canvas down evenly. It has to be absolutely
+        // positioned: a percentage height against an auto height parent is a
+        // no-op, which is what stopped the canvas filling the box before.
+        canvas.style.position = "absolute";
+        canvas.style.inset = "0";
         canvas.style.width = "100%";
         canvas.style.height = "100%";
         canvas.style.display = "block";
@@ -82,5 +97,5 @@ export default function CanvasSketch<TInputs, TOutputs>(
 
     onCleanup(() => cleanup?.());
 
-    return <div ref={container} />;
+    return <div ref={container} class="absolute inset-0" />;
 }
