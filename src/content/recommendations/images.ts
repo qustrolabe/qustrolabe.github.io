@@ -12,9 +12,10 @@ const modules = import.meta.glob<{ default: ImageMetadata }>(
  *   1. add files to src/assets/recommendations/
  *   2. run "bun run gen" (writes images.gen.ts listing them)
  *   3. uncomment the next line and delete the placeholder below
+ *   4. restore "as const" on the generated list so the filenames stay checked
  */
 // import { imageFiles } from "./images.gen";
-const imageFiles = [] as const;
+const imageFiles: readonly string[] = [];
 
 export type RecommendationImageFile = (typeof imageFiles)[number];
 
