@@ -3,6 +3,9 @@
 
 @theme {
     --color-background: #111111;
+    --color-foreground: #fff;
+    --color-muted: var(--color-gray-400);
+    --color-code-bg: var(--color-gray-800);
     /* --color-highlight: oklch(0.821 0.1415 216.27); */
     /* --color-highlight: #0ff; */
     /* --color-highlight: #fff; */
@@ -17,7 +20,6 @@
     --color-surface-border: var(--color-neutral-700);
 
     /* --color-border: #e0e0e0; */
-    /* --color-muted: #bbb; */
 
     /* --color-primary: #c02a06; */
     /* --color-secondary: #0f0; */

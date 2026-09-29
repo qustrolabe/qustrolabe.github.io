@@ -236,7 +236,7 @@ const items = headings.map((heading) => ({
         font-weight: 700;
         letter-spacing: 0.1em;
         text-transform: uppercase;
-        color: var(--color-gray-400);
+        color: var(--color-muted);
     }
 
     .toc-list {
@@ -256,7 +256,7 @@ const items = headings.map((heading) => ({
         padding: 0.15rem 0.5rem;
         padding-left: calc(0.5rem + (var(--toc-level, 1) - 1) * var(--toc-indent));
         font-size: calc(1em - (var(--toc-level, 1) - 1) * 0.03em);
-        color: var(--color-gray-400);
+        color: var(--color-muted);
         text-decoration: none;
         overflow-wrap: anywhere;
     }
@@ -270,7 +270,7 @@ const items = headings.map((heading) => ({
     }
 
     .toc-link:hover {
-        color: white;
+        color: var(--color-foreground);
     }
 
     /* Every heading inside the viewport: these markers butt up against each
