@@ -1,7 +1,13 @@
 ---
-const today = new Date();
+import { SITE_TITLE } from "@consts";
+
+// Baked at build time, so the year only refreshes when the site is redeployed.
+const year = new Date().getFullYear();
 ---
 
-<footer class="p-4 text-center text-foreground">
-    &copy; {today.getFullYear()} qustrolabe. All rights reserved.
+<footer
+    class="mx-auto w-full max-w-[768px] px-[1.5em] max-[48em]:max-w-full max-[48em]:px-[0.75em]"
+>
+    <hr class="border-surface-border/60" />
+    <p class="py-4 text-center text-sm text-muted">&copy; {year} {SITE_TITLE}</p>
 </footer>
