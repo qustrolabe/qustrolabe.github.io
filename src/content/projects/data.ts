@@ -9,6 +9,8 @@ export interface Project {
     image?: string;
     /** Iconify icon id (e.g. "simple-icons:rust"), shown next to the name when there is no image */
     icon?: string;
+    /** Year shown in the bottom right corner of the card, when set */
+    year?: number;
 }
 
 export const projects: Project[] = [
@@ -59,5 +61,6 @@ export const projects: Project[] = [
         repoUrl: "https://github.com/qustrolabe/sunclock",
         description: "in-browser day/night terminator and sun position clock",
         demoUrl: "https://qustrolabe.github.io/sunclock/",
+        year: 2026,
     },
 ];

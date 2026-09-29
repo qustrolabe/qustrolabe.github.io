@@ -46,8 +46,11 @@ import { getProjectImage } from "./images";
                                 </a>
                             </span>
                             <span class="text-sm/snug text-neutral-400">{project.description}</span>
-                            <span class="mt-auto pt-2 text-sm">
-                                {project.demoUrl ? "run in browser" : "open GitHub"}
+                            <span class="mt-auto flex items-baseline justify-between gap-2 pt-2 text-sm">
+                                <span>{project.demoUrl ? "run in browser" : "open GitHub"}</span>
+                                {project.year && (
+                                    <span class="text-neutral-500">{project.year}</span>
+                                )}
                             </span>
                         </div>
                         <a
