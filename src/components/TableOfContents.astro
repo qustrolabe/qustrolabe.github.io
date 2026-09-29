@@ -1,0 +1,308 @@
+---
+import type { MarkdownHeading } from "astro";
+
+interface Props {
+    headings: MarkdownHeading[];
+    title?: string;
+}
+
+const { headings, title = "Contents" } = Astro.props;
+
+// Posts are free to start at any heading level (`#`, `##`, ...), so rebase the
+// tree on the shallowest heading to keep the indentation meaningful.
+const baseDepth = Math.min(...headings.map((heading) => heading.depth));
+const items = headings.map((heading) => ({
+    ...heading,
+    level: Math.min(heading.depth - baseDepth + 1, 6),
+}));
+---
+
+{
+    items.length > 1 && (
+        <nav class="toc" aria-labelledby="toc-heading" data-toc>
+            <div class="toc-bar">
+                <p class="toc-heading" id="toc-heading">
+                    {title}
+                </p>
+            </div>
+            <ol class="toc-list" id="toc-list" data-toc-list>
+                {items.map((item) => (
+                    <li class="toc-item" style={`--toc-level: ${item.level}`}>
+                        <a class="toc-link" href={`#${item.slug}`} data-toc-link={item.slug}>
+                            {item.text}
+                        </a>
+                    </li>
+                ))}
+            </ol>
+        </nav>
+    )
+}
+
+<script>
+    /** Headings above this offset count as the section currently being read. */
+    const ACTIVE_OFFSET = 96;
+    /** Ignore headings hugging the bottom edge, they are only just arriving. */
+    const VISIBLE_BOTTOM_INSET = 24;
+
+    let teardown: (() => void) | null = null;
+
+    function initTableOfContents() {
+        teardown?.();
+        const cleanups: Array<() => void> = [];
+        teardown = () => {
+            for (const fn of cleanups) fn();
+            cleanups.length = 0;
+        };
+
+        for (const nav of document.querySelectorAll<HTMLElement>("[data-toc]")) {
+            const list = nav.querySelector<HTMLElement>("[data-toc-list]");
+
+            const entries: Array<{
+                link: HTMLAnchorElement;
+                row: HTMLElement;
+                target: HTMLElement;
+            }> = [];
+            for (const link of nav.querySelectorAll<HTMLAnchorElement>("[data-toc-link]")) {
+                const id = decodeURIComponent(link.dataset.tocLink ?? "");
+                const target = id ? document.getElementById(id) : null;
+                const row = link.closest<HTMLElement>(".toc-item");
+                if (id && target && row) {
+                    entries.push({ link, row, target });
+                }
+            }
+            if (entries.length === 0) continue;
+
+            // Whether this is a side rail or a block at the top of the post is a
+            // styling decision, so read it back off the element instead of
+            // restating the breakpoint here where the two could drift apart.
+            let rail = false;
+            const measure = () => {
+                rail = getComputedStyle(nav).position === "sticky";
+            };
+
+            let active: (typeof entries)[number] | null = null;
+            // Narrow screens only: set once the reader picks a section, after
+            // which the scroll no longer moves the highlight.
+            let chosen = false;
+            // Inclusive index range of headings currently inside the viewport. The
+            // markers of every entry in it are lit, so the guide line reads as one
+            // continuous bar spanning whatever part of the post is on screen.
+            let lit = { start: -1, end: -1 };
+
+            const keepVisible = (link: HTMLAnchorElement) => {
+                if (!list || !rail) return;
+                if (list.scrollHeight <= list.clientHeight) return;
+                const box = list.getBoundingClientRect();
+                const linkBox = link.getBoundingClientRect();
+                if (linkBox.top < box.top) {
+                    list.scrollTop -= box.top - linkBox.top + 8;
+                } else if (linkBox.bottom > box.bottom) {
+                    list.scrollTop += linkBox.bottom - box.bottom + 8;
+                }
+            };
+
+            const setActive = (entry: (typeof entries)[number]) => {
+                if (active === entry) return;
+                if (active) {
+                    active.row.removeAttribute("data-current");
+                    active.link.removeAttribute("aria-current");
+                }
+                active = entry;
+                // `aria-current` carries the meaning for screen readers, the row
+                // attribute is only there for the marker to hang off.
+                entry.link.setAttribute("aria-current", "location");
+                entry.row.setAttribute("data-current", "");
+                keepVisible(entry.link);
+            };
+
+            const setLit = (start: number, end: number) => {
+                if (start === lit.start && end === lit.end) return;
+                lit = { start, end };
+                for (const [index, entry] of entries.entries()) {
+                    if (index < start || index > end) entry.row.removeAttribute("data-lit");
+                }
+                for (let index = Math.max(start, 0); index <= end; index++) {
+                    entries[index]?.row.setAttribute("data-lit", "");
+                }
+            };
+
+            const update = () => {
+                // Narrow screens pin the highlight to whatever the reader last
+                // picked. The list scrolls away with the page there, so tracking
+                // the scroll would only feed a viewport whose height the browser
+                // chrome keeps resizing underneath us.
+                if (chosen && !rail) return;
+
+                const root = document.documentElement;
+                // The last section can't reach the top of the viewport on short
+                // trailing sections, so the bottom of the page owns it.
+                const atBottom = root.scrollHeight - window.scrollY - window.innerHeight <= 2;
+
+                const viewportBottom = window.innerHeight - VISIBLE_BOTTOM_INSET;
+                let start = -1;
+                let end = -1;
+                for (const [index, entry] of entries.entries()) {
+                    const box = entry.target.getBoundingClientRect();
+                    if (box.bottom > ACTIVE_OFFSET && box.top < viewportBottom) {
+                        if (start === -1) start = index;
+                        end = index;
+                    }
+                }
+
+                let next = entries[0]!;
+                if (atBottom) {
+                    next = entries[entries.length - 1]!;
+                } else {
+                    for (const entry of entries) {
+                        if (entry.target.getBoundingClientRect().top - ACTIVE_OFFSET <= 0) {
+                            next = entry;
+                        } else {
+                            break;
+                        }
+                    }
+                }
+                setActive(next);
+
+                // The rail lights up everything on screen at once. Elsewhere a
+                // single entry stands for "the one you asked for".
+                const index = entries.indexOf(next);
+                if (start === -1 || !rail) setLit(index, index);
+                else setLit(start, end);
+            };
+
+            for (const [index, entry] of entries.entries()) {
+                const onClick = () => {
+                    // The rail keeps following the scroll, a click there is just
+                    // a jump and the page landing on the new spot updates it.
+                    if (rail) return;
+                    chosen = true;
+                    setActive(entry);
+                    setLit(index, index);
+                };
+                entry.link.addEventListener("click", onClick);
+                cleanups.push(() => entry.link.removeEventListener("click", onClick));
+            }
+
+            let frame = 0;
+            const onScroll = () => {
+                if (frame) return;
+                frame = requestAnimationFrame(() => {
+                    frame = 0;
+                    update();
+                });
+            };
+
+            const onResize = () => {
+                measure();
+                onScroll();
+            };
+
+            window.addEventListener("scroll", onScroll, { passive: true });
+            window.addEventListener("resize", onResize);
+            cleanups.push(() => {
+                window.removeEventListener("scroll", onScroll);
+                window.removeEventListener("resize", onResize);
+                if (frame) cancelAnimationFrame(frame);
+            });
+
+            measure();
+            update();
+        }
+    }
+
+    initTableOfContents();
+    document.addEventListener("astro:page-load", initTableOfContents);
+</script>
+
+<style>
+    .toc {
+        --toc-indent: 0.65rem;
+        --toc-marker: 2px;
+        --toc-dimmed: color-mix(in oklab, var(--color-highlight) 40%, transparent);
+        font-size: 0.8rem;
+        line-height: 1.45;
+    }
+
+    .toc-bar {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.5rem;
+    }
+
+    .toc-heading {
+        margin: 0;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--color-gray-400);
+    }
+
+    .toc-list {
+        margin: 0.5rem 0 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    /* The marker lives on the row, not the link, so it stays a single straight
+       line at the same x for every level. Only the label steps inwards. */
+    .toc-item {
+        border-left: var(--toc-marker) solid var(--color-surface-border);
+    }
+
+    .toc-link {
+        display: block;
+        padding: 0.15rem 0.5rem;
+        padding-left: calc(0.5rem + (var(--toc-level, 1) - 1) * var(--toc-indent));
+        font-size: calc(1em - (var(--toc-level, 1) - 1) * 0.03em);
+        color: var(--color-gray-400);
+        text-decoration: none;
+        overflow-wrap: anywhere;
+    }
+
+    /* Matches the smooth scrolling guard in global.css, the highlight changes on
+       every scroll frame so it is not a transition worth keeping regardless. */
+    @media (prefers-reduced-motion: no-preference) {
+        .toc-link {
+            transition: color 0.15s ease;
+        }
+    }
+
+    .toc-link:hover {
+        color: white;
+    }
+
+    /* Every heading inside the viewport: these markers butt up against each
+       other, so the run of them reads as a single bar. */
+    .toc-item[data-lit] {
+        border-left-color: var(--toc-dimmed);
+    }
+
+    /* The section being read right now. */
+    .toc-item[data-current] {
+        border-left-color: var(--color-highlight);
+    }
+
+    .toc-link[aria-current] {
+        color: var(--color-highlight);
+    }
+
+    /* Wide screens: the same nav becomes a rail in the left gutter. Keep this
+       threshold in step with the `min-[86em]:` grid on the blog post page, the
+       script reads the mode back off `position` rather than repeating it. */
+    @media (min-width: 86em) {
+        .toc {
+            position: sticky;
+            top: 1.5rem;
+            font-size: 0.85rem;
+        }
+
+        /* A sticky box taller than the viewport just scrolls away, so the list
+           scrolls inside itself once the post has more headings than fit. */
+        .toc-list {
+            max-height: calc(100vh - 5rem);
+            overflow-y: auto;
+        }
+    }
+</style>

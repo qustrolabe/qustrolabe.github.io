@@ -44,7 +44,7 @@ export default tseslint.config(
                 {
                     ...betterTailwindOptions,
                     // semantic classes styled in component <style> blocks, not Tailwind utilities
-                    ignore: ["^(hero-image|title|date|last-updated-on)$"],
+                    ignore: ["^(hero-image|title|date|last-updated-on)$", "^toc-"],
                 },
             ],
         },

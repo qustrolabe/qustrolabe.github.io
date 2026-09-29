@@ -1,0 +1,99 @@
+---
+title: "Table of contents test page"
+description: "Unpublished scratch post used to check the table of contents layout"
+pubDate: 1769000000000
+draft: true
+---
+
+This post is a scratch pad for the table of contents. It is a draft, so it is
+only built in `astro dev` and never shows up in the blog index or in a
+production build. It exists to check nesting, indentation, scroll tracking and
+anchor jumps.
+
+# Level one
+
+Sections here use `#`, which is what most posts in this collection do.
+
+Some filler so this section is taller than the viewport needs. Lorem ipsum
+dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+ut labore et dolore magna aliqua.
+
+- bullet one
+- bullet two
+- bullet three
+
+## Level two
+
+Nested under the first level one section.
+
+```bash
+echo "headings render as anchor links with ids"
+```
+
+### Level three
+
+Nested one deeper still. This is where the indentation should start to feel
+like a real hierarchy rather than a flat list.
+
+#### Level four
+
+The deepest level this theme styles. Anything deeper still gets clamped.
+
+More text so scrolling reaches this heading at a sensible position.
+
+## Another level two
+
+Siblings of "Level two" should line up at the same indent.
+
+1. first
+2. second
+3. third
+
+# Level one, again
+
+A second top level section. The sidebar highlight should move here once it
+scrolls past the previous section.
+
+## A long heading to check wrapping
+
+This heading is intentionally verbose so you can see how the side rail handles
+text that wants to wrap onto several lines, and whether the active marker still
+lines up nicely when it does.
+
+### A heading with `code` and [a link](https://example.com)
+
+Mixed inline content in a heading. The generated id has to survive the code
+span and the link, and the label in the TOC should stay plain text.
+
+## Notes
+
+- always expanded at the top on phones
+- on phones the highlight sticks to the last section you clicked
+- on the rail it follows the scroll, and the line spans every heading on screen
+- deep links work with and without JavaScript
+
+# Edge cases
+
+A section with very little content, immediately followed by another one. Short
+sections are the hardest case for scroll tracking, because the next heading
+reaches the top of the viewport almost immediately.
+
+## One line
+
+Just this.
+
+## Another one
+
+And this.
+
+# Wrapping up
+
+A final long section so the page can be scrolled all the way to the bottom,
+which is how you check that the last heading stays highlighted once there is no
+more content below it.
+
+Extra paragraphs to make the bottom of the page reachable.
+
+Second paragraph.
+
+Third paragraph.

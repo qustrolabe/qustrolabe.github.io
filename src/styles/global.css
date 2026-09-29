@@ -66,6 +66,16 @@
         border-width: 1px 0 0 0;
     }
 
+    /* Keep anchored headings clear of the viewport top when jumping to them */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        scroll-margin-top: 1.5rem;
+    }
+
     /* Language label */
     /* pre::before {
 		content: attr(data-language);
@@ -135,6 +145,12 @@ a[href^="http"]:not(:has(img, svg))::after {
 
 html {
     scrollbar-gutter: stable;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
 }
 
 /* Style scrollbar */

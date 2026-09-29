@@ -4,12 +4,10 @@ import MainLayout from "@layouts/MainLayout.astro";
 import FormattedDate from "@components/FormattedDate.astro";
 import { Image } from "astro:assets";
 import Prose from "@components/Prose.astro";
+import TableOfContents from "@components/TableOfContents.astro";
 
 export async function getStaticPaths() {
-    const posts = await getCollection(
-        "blog",
-        (post) => import.meta.env.DEV || !post.data.draft,
-    );
+    const posts = await getCollection("blog", (post) => import.meta.env.DEV || !post.data.draft);
     return posts.map((post) => ({
         params: { slug: post.id },
         props: post,
@@ -18,44 +16,73 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<"blog">;
 
 const post = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
+const hasToc = headings.length > 1;
+
+// The page below is a three column grid: [gutter] [post] [gutter]. The gutters
+// are equal, so the post stays optically centred whether or not the table of
+// contents renders one. Below `86em` there is no room for a rail in the left
+// gutter, so the grid collapses to one column and the table of contents stacks
+// above the post instead.
 ---
 
-<MainLayout title={post.data.title} description={post.data.description || ""}>
-    <Prose>
-        <article>
-            <div class="hero-image">
-                {
-                    post.data.heroImage && (
-                        <Image
-                            class="mt-0"
-                            width={1020}
-                            height={510}
-                            src={post.data.heroImage}
-                            alt=""
-                            loading="eager"
-                        />
-                    )
-                }
-            </div>
-            <div class="title">
-                <div class="date">
-                    <FormattedDate date={post.data.pubDate} />
-                    {
-                        post.data.updatedDate && (
-                            <div class="last-updated-on">
-                                Last updated on <FormattedDate date={post.data.updatedDate} />
+<MainLayout title={post.data.title} description={post.data.description || ""} customMain>
+    <main
+        class="mx-auto w-full max-w-[calc(100%-2em)] px-[1.5em] pt-4 pb-8 max-[48em]:max-w-full max-[48em]:px-[0.75em]"
+    >
+        <div
+            class="grid gap-6 min-[86em]:grid-cols-[minmax(0,1fr)_minmax(0,768px)_minmax(0,1fr)] min-[86em]:gap-8"
+        >
+            {
+                hasToc && (
+                    <div class="mx-auto w-full max-w-[768px] min-w-0 min-[86em]:col-start-1 min-[86em]:row-start-1 min-[86em]:mx-0 min-[86em]:max-w-[15rem] min-[86em]:justify-self-end">
+                        <TableOfContents headings={headings} />
+                    </div>
+                )
+            }
+            <div
+                class="mx-auto w-full max-w-[768px] min-w-0 min-[86em]:col-start-2 min-[86em]:row-start-1"
+            >
+                <Prose>
+                    <article>
+                        <div class="hero-image">
+                            {
+                                post.data.heroImage && (
+                                    <Image
+                                        class="mt-0"
+                                        width={1020}
+                                        height={510}
+                                        src={post.data.heroImage}
+                                        alt=""
+                                        loading="eager"
+                                    />
+                                )
+                            }
+                        </div>
+                        <div class="title">
+                            <div class="date">
+                                <FormattedDate date={post.data.pubDate} />
+                                {
+                                    post.data.updatedDate && (
+                                        <div class="last-updated-on">
+                                            Last updated on{" "}
+                                            <FormattedDate date={post.data.updatedDate} />
+                                        </div>
+                                    )
+                                }
                             </div>
-                        )
-                    }
-                </div>
-                <h1 class="mb-0">
-                    <a class="no-underline!" href={Astro.url.pathname}>{post.data.title}</a>
-                </h1>
-                <span class="text-gray-300">{post.data.description}</span>
-                <hr />
+                            <h1 class="mb-0">
+                                <a class="no-underline!" href={Astro.url.pathname}>
+                                    {post.data.title}
+                                </a>
+                            </h1>
+                            <span class="text-gray-300">{post.data.description}</span>
+                            <hr />
+                        </div>
+                        <Content />
+                    </article>
+                </Prose>
             </div>
-            <Content />
-        </article>
-    </Prose>
+        </div>
+    </main>
 </MainLayout>
