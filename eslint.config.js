@@ -1,4 +1,5 @@
 // @ts-check
+import { defineConfig } from "eslint/config";
 import eslintPluginAstro from "eslint-plugin-astro";
 import betterTailwindcss from "eslint-plugin-better-tailwindcss";
 import tseslint from "typescript-eslint";
@@ -25,7 +26,7 @@ const withOptions = (preset) =>
         ),
     }));
 
-export default tseslint.config(
+export default defineConfig(
     {
         ignores: ["dist/**", ".astro/**", "public/**", "src/assets/**"],
     },
