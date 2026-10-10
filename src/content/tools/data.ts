@@ -11,7 +11,7 @@ export const tools: Tool[] = [
     {
         slug: "github-repo-size",
         name: "GitHub repo size",
-        description: "repository size straight from the GitHub API",
+        description: "repository or branch size straight from the GitHub API",
         icon: "mdi:github",
     },
 ];
